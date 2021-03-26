@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <title>Welkom</title>
+    <link rel="stylesheet" th:href="@{/css/security.css}"></link>
+</head>
+<body>
+<h1>Inloggen</h1>
+<div sec:authorize="isAuthenticated()">
+    Enkel ingelogde gebruikers zien deze tekst
+</div>
+<ul>
+
+    <li sec:authorize-url="/geluksgetal" ><a th:href="@{/geluksgetal}">geluksgetal</a></li>
+
+
+</ul>
+<form method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+    <button><th:block sec:authentication="name"></th:block>  Uitloggen</button>
+</form>
+
+<form th:action="@{/}" method="post" sec:authorize="isAnonymous()">
+    <input name="username" required autofocus placeholder="Gebruikersnaam">
+    <input name="password" type="password" required placeholder="Paswoord">
+    <button>Inloggen</button>
+
+</form>
+<div th:if="${param.error}">Verkeerde gebruikersnaam of paswoord</div>
+</body>
+</html>
